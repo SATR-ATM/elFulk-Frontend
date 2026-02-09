@@ -16,7 +16,7 @@
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
-    "*.{ts,js}": [
+    "*.{ts,js,jsx,tsx}": [
       "prettier --write",
       "eslint src --fix --quiet"
     ],
