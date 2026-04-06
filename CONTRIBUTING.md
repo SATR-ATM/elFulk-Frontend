@@ -111,13 +111,13 @@ Always branch from the latest upstream `main`:
 
 ```bash
 git fetch upstream
-git switch main
-git reset --hard upstream/main
+git switch dev
+git reset --hard upstream/dev
 git switch -c feature/123-profile-avatar-upload
 ```
 
 > Alternative (if you prefer):
-> `git pull --rebase upstream main` instead of `reset --hard` (just keep it clean).
+> `git pull --rebase upstream dev` instead of `reset --hard` (just keep it clean).
 
 ### 3.4 Commit rules (emoji is mandatory)
 
@@ -160,9 +160,9 @@ git commit -m "✨ feat(profile): add avatar picker UI"
 git push -u origin feature/123-profile-avatar-upload
 ```
 
-### 3.6 Open a Pull Request (PR) to upstream `main`
+### 3.6 Open a Pull Request (PR) to upstream `dev`
 
-- Base: `main` (upstream repo)
+- Base: `dev` (upstream repo)
 - Compare: your fork branch
 - Fill the PR template (below)
 - Ensure CI passes
@@ -183,11 +183,11 @@ This will auto-close the issue when the PR is merged.
 
 ### 3.8 Keep your PR up to date
 
-If upstream `main` moved, update your branch:
+If upstream `dev` moved, update your branch:
 
 ```bash
 git fetch upstream
-git rebase upstream/main
+git rebase upstream/dev
 git push --force-with-lease
 ```
 
@@ -200,7 +200,7 @@ On GitHub: click **Delete branch** (if available)
 Locally:
 
 ```bash
-git switch main
+git switch dev
 git branch -d feature/123-profile-avatar-upload
 ```
 
@@ -219,7 +219,7 @@ If you have write access to the upstream repo:
 - You may create branches directly in the upstream repo **or** use a fork (both are fine).
 - You still must:
   - Work on a short‑lived branch
-  - Open a PR to `main`
+  - Open a PR to `dev`
   - Link the Issue
   - Add Issue + PR to the GitHub Project board
 
