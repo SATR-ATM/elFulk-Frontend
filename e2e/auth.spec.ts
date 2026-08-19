@@ -58,7 +58,7 @@ test.describe("Login", () => {
     await expect(page).toHaveURL("/forgot-password");
   });
 
-  test.skip("social login buttons are visible but do not call any API", async ({ page }) => {
+  test.fixme("social login buttons are visible but do not call any API", async ({ page }) => {
     let called = false;
     await page.route("**/api/auth/**", () => {
       called = true;
