@@ -1,31 +1,55 @@
 import { Page } from "@playwright/test";
-import { mockToken, mockParent } from "../fixtures/mockData";
+import { mockParent } from "../fixtures/mockData";
 
 export async function mockAuthRoutes(page: Page) {
-  await page.route("**/api/auth/login", async (route) => {
-    const body = route.request().postDataJSON();
-    if (body?.email && body?.password) {
-      await route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify({ ...mockToken, parent: mockParent }),
-      });
-    } else {
-      await route.fulfill({
-        status: 401,
-        contentType: "application/json",
-        body: JSON.stringify({ message: "Invalid credentials" }),
-      });
-    }
-  });
-
-  await page.route("**/api/auth/register", async (route) => {
-    await route.fulfill({
+  // BetterAuth sign-in
+  await page.route("**/api/auth/sign-in/email", (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        token: "mock-jwt",
+        user: { id: mockParent.id, email: mockParent.email },
+      }),
+    })
+  );
+  // BetterAuth sign-up
+  await page.route("**/api/auth/sign-up/email", (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ user: { id: mockParent.id, email: mockParent.email } }),
+    })
+  );
+  // NestJS user profile creation
+  await page.route("**/api/v1/users", (route) =>
+    route.fulfill({
       status: 201,
       contentType: "application/json",
-      body: JSON.stringify({ ...mockToken, parent: mockParent }),
-    });
-  });
+      body: JSON.stringify({
+        id: mockParent.id,
+        first_name: mockParent.first_name,
+        last_name: mockParent.last_name,
+        type: mockParent.type,
+      }),
+    })
+  );
+  // BetterAuth resend verification
+  await page.route("**/api/auth/send-verification-email", (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ message: "Email sent" }),
+    })
+  );
+  // BetterAuth forgot password
+  await page.route("**/api/auth/forget-password", (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ message: "Email sent" }),
+    })
+  );
 }
 
 //? If we are going to use BetterAuth, and we should.
