@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { loginSchema, LoginFormValues } from "@/lib/schemas/auth";
+import { loginSchema, LoginFormValues } from "@/schemas/auth";
 import { FormField } from "@/components/ui/FormField";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { ElFulkLogo } from "@/components/ui/ElFulkLogo";
