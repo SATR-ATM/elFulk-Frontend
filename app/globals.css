@@ -2,25 +2,119 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f172a;
+  --font-parents: "Lama Sans", var(--font-readex), var(--font-tajawal), system-ui, sans-serif;
+  --font-children: "Baloo Bhaijaan 2", var(--font-baloo), cursive, sans-serif;
+  --brand-teal: #48a999;
+  --brand-teal-hover: #3d9385;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-teal-hover: var(--brand-teal-hover);
+  --font-parents: var(--font-parents);
+  --font-children: var(--font-children);
+  --font-sans: var(--font-parents);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-parents);
 }
+
+/* Typography Specifications from Design System */
+@layer utilities {
+  .text-display-1 {
+    font-size: 40px;
+    line-height: 1.2;
+  }
+  @media (min-width: 768px) {
+    .text-display-1 {
+      font-size: 48px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .text-display-1 {
+      font-size: 56px;
+    }
+  }
+
+  .text-display-2 {
+    font-size: 34px;
+    line-height: 1.25;
+  }
+  @media (min-width: 768px) {
+    .text-display-2 {
+      font-size: 40px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .text-display-2 {
+      font-size: 48px;
+    }
+  }
+
+  .text-display-3 {
+    font-size: 28px;
+    line-height: 1.3;
+  }
+  @media (min-width: 768px) {
+    .text-display-3 {
+      font-size: 34px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .text-display-3 {
+      font-size: 40px;
+    }
+  }
+
+  .text-h1 {
+    font-size: 26px;
+    line-height: 1.35;
+  }
+  @media (min-width: 768px) {
+    .text-h1 {
+      font-size: 30px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .text-h1 {
+      font-size: 36px;
+    }
+  }
+
+  .text-h2 {
+    font-size: 22px;
+    line-height: 1.4;
+  }
+  @media (min-width: 768px) {
+    .text-h2 {
+      font-size: 26px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .text-h2 {
+      font-size: 30px;
+    }
+  }
+
+  .text-h3 {
+    font-size: 20px;
+    line-height: 1.45;
+  }
+  @media (min-width: 768px) {
+    .text-h3 {
+      font-size: 22px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .text-h3 {
+      font-size: 24px;
+    }
+  }
+}
+
