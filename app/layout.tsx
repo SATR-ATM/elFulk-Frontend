@@ -21,6 +21,44 @@ const tajawal = Tajawal({
   subsets: ["arabic", "latin"],
   weight: ["400", "500", "700"],
   display: "swap",
+import { Baloo_Bhaijaan_2 } from "next/font/google";
+import localFont from "next/font/local";
+import "./globals.css";
+
+const childrenFont = Baloo_Bhaijaan_2({
+  variable: "--family-children",
+  subsets: ["latin"],
+});
+
+const parentFont = localFont({
+  src: [
+    {
+      path: "../public/fonts/LamaSans-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/LamaSans-RegularItalic.ttf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../public/fonts/LamaSans-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/LamaSans-SemiBold.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/LamaSans-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--family-parents",
 });
 
 export const metadata: Metadata = {
@@ -42,6 +80,8 @@ export default function RootLayout({
       <body className="font-parents min-h-screen bg-[#f8fafc] text-slate-900 antialiased">
         {children}
       </body>
+    <html lang="en" className={`${childrenFont.variable} ${parentFont.variable}`}>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
