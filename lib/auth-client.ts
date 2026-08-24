@@ -1,4 +1,4 @@
-import { LoginFormValues, RegisterFormValues, VerifyEmailFormValues } from "@/lib/schemas/auth";
+import { LoginFormValues, RegisterFormValues, VerifyEmailFormValues } from "@/schemas/auth";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
