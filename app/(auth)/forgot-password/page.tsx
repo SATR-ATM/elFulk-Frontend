@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Mail, ArrowLeft } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 import { FormField } from "@/components/ui/FormField";
 import { ElFulkLogo } from "@/components/ui/ElFulkLogo";
 
@@ -20,9 +22,18 @@ export default function ForgotPasswordPage() {
     }
     setIsSubmitting(true);
     setError(null);
-    await new Promise((resolve) => setTimeout(resolve, 800));
-    setIsSubmitting(false);
-    router.push("/verify-email");
+    try {
+      const res = await authClient.forgotPassword(email);
+      if (!res.ok) {
+        setError(res.message || "حدث خطأ، يرجى المحاولة مرة أخرى");
+        return;
+      }
+      router.push("/verify-email");
+    } catch {
+      setError("حدث خطأ، يرجى المحاولة مرة أخرى");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -53,23 +64,7 @@ export default function ForgotPasswordPage() {
             setError(null);
           }}
           error={error ?? undefined}
-          icon={
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <rect width="20" height="16" x="2" y="4" rx="2" />
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-            </svg>
-          }
+          icon={Mail}
         />
 
         {/* Submit Button with send icon matching Figma */}
@@ -80,23 +75,8 @@ export default function ForgotPasswordPage() {
           disabled={isSubmitting}
           className="mt-1 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#48a999] px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-[#48a999]/20 transition-all hover:bg-[#3d9385] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="rotate-180"
-            aria-hidden="true"
-          >
-            <path d="m22 2-7 20-4-9-9-4Z" />
-            <path d="M22 2 11 13" />
-          </svg>
           <span>{isSubmitting ? "جاري الإرسال..." : "ارسال رمز التحقق"}</span>
+          <ArrowLeft className="h-4.5 w-4.5" aria-hidden="true" />
         </button>
       </form>
 

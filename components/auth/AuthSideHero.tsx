@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Slide {
   id: number;
@@ -81,21 +82,8 @@ export function AuthSideHero() {
             aria-label="الشريحة السابقة"
             className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/5 text-white backdrop-blur-xs transition-all hover:border-white/50 hover:bg-white/15 focus:ring-2 focus:ring-white/30 focus:outline-none active:scale-95"
           >
-            {/* Left arrow in RTL (points towards next visual direction) */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="m15 18-6-6 6-6" />
-            </svg>
+            {/* Right arrow in RTL for previous slide */}
+            <ChevronRight className="h-5 w-5" aria-hidden="true" />
           </button>
 
           <button
@@ -104,21 +92,8 @@ export function AuthSideHero() {
             aria-label="الشريحة التالية"
             className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/5 text-white backdrop-blur-xs transition-all hover:border-white/50 hover:bg-white/15 focus:ring-2 focus:ring-white/30 focus:outline-none active:scale-95"
           >
-            {/* Right arrow */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="m9 18 6-6-6-6" />
-            </svg>
+            {/* Left arrow in RTL for next slide */}
+            <ChevronLeft className="h-5 w-5" aria-hidden="true" />
           </button>
 
           {/* Slide dots indicator for accessibility & feedback */}

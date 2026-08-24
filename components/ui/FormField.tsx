@@ -1,9 +1,10 @@
 import React, { forwardRef } from "react";
+import { LucideIcon } from "lucide-react";
 
 export interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
-  icon?: React.ReactNode;
+  icon?: LucideIcon | React.ReactNode;
   hint?: string;
 }
 
@@ -27,6 +28,18 @@ export const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
     const errorId = error && inputId ? `${inputId}-error` : undefined;
     const computedAriaLabel = ariaLabel ?? label ?? placeholder;
 
+    const renderIcon = () => {
+      if (!icon) return null;
+      if (
+        typeof icon === "function" ||
+        (typeof icon === "object" && icon !== null && "render" in icon)
+      ) {
+        const IconComponent = icon as LucideIcon;
+        return <IconComponent className="h-5 w-5 text-slate-400" aria-hidden="true" />;
+      }
+      return icon;
+    };
+
     return (
       <div className={`flex w-full flex-col gap-1.5 ${className}`}>
         {label && (
@@ -48,10 +61,10 @@ export const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
             aria-invalid={Boolean(error)}
             aria-describedby={errorId}
             className={[
-              "w-full rounded-2xl border bg-white px-4 py-2.5 text-right text-sm text-slate-800 transition-all",
+              "w-full rounded-2xl border bg-white py-2.5 text-right text-sm text-slate-800 transition-all",
+              icon ? "pr-11 pl-4" : "px-4",
               "border-slate-200 placeholder:text-slate-400 hover:border-slate-300",
               "focus:border-[#48a999] focus:ring-4 focus:ring-[#48a999]/15 focus:outline-none",
-              icon ? "pr-11" : "",
               error
                 ? "border-red-400 bg-red-50/20 text-red-900 focus:border-red-500 focus:ring-red-400/20"
                 : "",
@@ -63,7 +76,7 @@ export const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
 
           {icon && (
             <span className="pointer-events-none absolute top-1/2 right-3.5 -translate-y-1/2 text-slate-400">
-              {icon}
+              {renderIcon()}
             </span>
           )}
         </div>

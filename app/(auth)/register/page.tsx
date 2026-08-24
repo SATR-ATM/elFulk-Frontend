@@ -5,8 +5,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { User, Mail, ArrowLeft } from "lucide-react";
 
 import { registerSchema, RegisterFormValues } from "@/schemas/auth";
+import { authClient } from "@/lib/auth-client";
 import { FormField } from "@/components/ui/FormField";
 import { PasswordInput } from "@/components/ui/PasswordInput";
 import { ElFulkLogo } from "@/components/ui/ElFulkLogo";
@@ -34,14 +36,10 @@ export default function RegisterPage() {
   const onSubmit = async (data: RegisterFormValues) => {
     setRegisterError(null);
     try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      const res = await authClient.register(data);
 
       if (!res.ok) {
-        setRegisterError("حدث خطأ أثناء إنشاء الحساب، يرجى المحاولة مرة أخرى");
+        setRegisterError(res.message || "حدث خطأ أثناء إنشاء الحساب، يرجى المحاولة مرة أخرى");
         return;
       }
 
@@ -80,23 +78,7 @@ export default function RegisterPage() {
             autoComplete="given-name"
             {...register("firstName")}
             error={errors.firstName?.message}
-            icon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="17"
-                height="17"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-            }
+            icon={User}
           />
           {/* اللقب (lastName) — left column in RTL */}
           <FormField
@@ -106,23 +88,7 @@ export default function RegisterPage() {
             autoComplete="family-name"
             {...register("lastName")}
             error={errors.lastName?.message}
-            icon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="17"
-                height="17"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-            }
+            icon={User}
           />
         </div>
 
@@ -135,23 +101,7 @@ export default function RegisterPage() {
           autoComplete="email"
           {...register("email")}
           error={errors.email?.message}
-          icon={
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="17"
-              height="17"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <rect width="20" height="16" x="2" y="4" rx="2" />
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-            </svg>
-          }
+          icon={Mail}
         />
 
         {/* Password */}
@@ -219,23 +169,8 @@ export default function RegisterPage() {
           disabled={isSubmitting}
           className="mt-1 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#48a999] px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-[#48a999]/20 transition-all hover:bg-[#3d9385] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-            <polyline points="10 17 15 12 10 7" />
-            <line x1="15" x2="3" y1="12" y2="12" />
-          </svg>
           <span>{isSubmitting ? "جاري التحميل..." : "إنشاء حساب"}</span>
+          <ArrowLeft className="h-4.5 w-4.5" aria-hidden="true" />
         </button>
       </form>
 

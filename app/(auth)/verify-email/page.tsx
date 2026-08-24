@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Check } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import { useResendTimer } from "@/lib/hooks/useResendTimer";
 import { ElFulkLogo } from "@/components/ui/ElFulkLogo";
 
 const OTP_LENGTH = 5;
-const RESEND_SECONDS = 63; // 01:03 countdown matching Figma
 
 export default function VerifyEmailPage() {
   const router = useRouter();
@@ -14,24 +16,15 @@ export default function VerifyEmailPage() {
   const [digits, setDigits] = useState<string[]>(Array(OTP_LENGTH).fill(""));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  // Countdown timer
-  const [secondsLeft, setSecondsLeft] = useState(RESEND_SECONDS);
+  // Countdown timer hook
+  const { secondsLeft, formattedTime, canResend, startTimer } = useResendTimer();
   const [verifying, setVerifying] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (secondsLeft <= 0) return;
-    const id = setInterval(() => setSecondsLeft((s) => s - 1), 1000);
-    return () => clearInterval(id);
-  }, [secondsLeft]);
-
-  const formatTime = (s: number) => {
-    const m = Math.floor(s / 60)
-      .toString()
-      .padStart(2, "0");
-    const sec = (s % 60).toString().padStart(2, "0");
-    return `${m}:${sec}`;
-  };
+    setMounted(true);
+  }, []);
 
   const handleChange = (index: number, value: string) => {
     if (!/^\d*$/.test(value)) return; // digits only
@@ -62,14 +55,14 @@ export default function VerifyEmailPage() {
     inputRefs.current[Math.min(pasted.length, OTP_LENGTH - 1)]?.focus();
   };
 
-  const handleResend = useCallback(() => {
-    if (secondsLeft > 0) return;
+  const handleResend = () => {
+    if (!canResend) return;
     setDigits(Array(OTP_LENGTH).fill(""));
     setError(null);
-    setSecondsLeft(RESEND_SECONDS);
+    startTimer();
     inputRefs.current[0]?.focus();
     // TODO: call resend API when backend is ready
-  }, [secondsLeft]);
+  };
 
   const handleVerify = async () => {
     const code = digits.join("");
@@ -80,13 +73,9 @@ export default function VerifyEmailPage() {
     setError(null);
     setVerifying(true);
     try {
-      const res = await fetch("/api/auth/verify-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code }),
-      });
+      const res = await authClient.verifyEmail({ code });
       if (!res.ok) {
-        setError("الرمز غير صحيح، يرجى المحاولة مرة أخرى");
+        setError(res.message || "الرمز غير صحيح، يرجى المحاولة مرة أخرى");
         return;
       }
       router.push("/add-child");
@@ -144,11 +133,11 @@ export default function VerifyEmailPage() {
 
       {/* Resend countdown */}
       <div className="mt-1 mb-5 w-full text-center">
-        {secondsLeft > 0 ? (
+        {!mounted || secondsLeft > 0 ? (
           <span className="text-xs font-medium text-slate-500 sm:text-sm" aria-live="polite">
             اعادة ارسال الرمز بعد{" "}
             <span className="font-bold text-[#48a999]" dir="ltr">
-              {formatTime(secondsLeft)}
+              {mounted ? formattedTime : "01:00"}
             </span>
           </span>
         ) : (
@@ -183,20 +172,7 @@ export default function VerifyEmailPage() {
         disabled={verifying}
         className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#48a999] px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-[#48a999]/20 transition-all hover:bg-[#3d9385] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M20 6 9 17l-5-5" />
-        </svg>
+        <Check className="h-4.5 w-4.5" aria-hidden="true" />
         <span>{verifying ? "جاري التحقق..." : "تأكيد الرمز"}</span>
       </button>
     </div>
