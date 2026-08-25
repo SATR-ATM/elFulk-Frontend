@@ -74,7 +74,7 @@ export default function RegisterPage() {
           <FormField
             id="firstName"
             placeholder="الاسم"
-            aria-label="الاسم"
+            aria-label="first-name-input"
             autoComplete="given-name"
             {...register("firstName")}
             error={errors.firstName?.message}
@@ -84,7 +84,7 @@ export default function RegisterPage() {
           <FormField
             id="lastName"
             placeholder="اللقب"
-            aria-label="اللقب"
+            aria-label="last-name-input"
             autoComplete="family-name"
             {...register("lastName")}
             error={errors.lastName?.message}
@@ -97,7 +97,7 @@ export default function RegisterPage() {
           id="email"
           type="email"
           placeholder="البريد الإلكتروني"
-          aria-label="البريد الإلكتروني"
+          aria-label="email-input"
           autoComplete="email"
           {...register("email")}
           error={errors.email?.message}
@@ -108,7 +108,7 @@ export default function RegisterPage() {
         <PasswordInput
           id="password"
           placeholder="كلمة المرور"
-          aria-label="كلمة المرور"
+          aria-label="password-input"
           autoComplete="new-password"
           {...register("password")}
           error={errors.password?.message}
@@ -120,7 +120,7 @@ export default function RegisterPage() {
             <input
               id="acceptTerms"
               type="checkbox"
-              aria-label="الموافقة على شروط الاستخدام وسياسة الخصوصية"
+              aria-label="terms-checkbox"
               className="h-4 w-4 cursor-pointer rounded border-slate-300 accent-[#48a999] focus:ring-2 focus:ring-[#48a999]"
               {...register("acceptTerms")}
             />
@@ -131,7 +131,7 @@ export default function RegisterPage() {
               أوافق على{" "}
               <a
                 href="#"
-                aria-label="اقرأ شروط الاستخدام وسياسة الخصوصية"
+                aria-label="terms-and-conditions-link"
                 className="font-semibold text-[#48a999] underline underline-offset-2 hover:text-[#3d9385]"
               >
                 شروط الاستخدام وسياسة الخصوصية
@@ -165,7 +165,7 @@ export default function RegisterPage() {
         <button
           type="submit"
           id="register-submit-btn"
-          aria-label="إنشاء حساب جديد"
+          aria-label="register-submit"
           disabled={isSubmitting}
           className="mt-1 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#48a999] px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-[#48a999]/20 transition-all hover:bg-[#3d9385] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
         >
