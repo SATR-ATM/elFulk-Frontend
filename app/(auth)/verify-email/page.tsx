@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Check } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
@@ -20,11 +20,6 @@ export default function VerifyEmailPage() {
   const { secondsLeft, formattedTime, canResend, startTimer } = useResendTimer();
   const [verifying, setVerifying] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleChange = (index: number, value: string) => {
     if (!/^\d*$/.test(value)) return; // digits only
@@ -104,11 +99,7 @@ export default function VerifyEmailPage() {
       </div>
 
       {/* OTP Boxes — displayed LTR like Figma */}
-      <div
-        dir="ltr"
-        className="mb-2 flex items-center gap-2.5 sm:gap-3"
-        aria-label="حقول إدخال رمز التحقق"
-      >
+      <div dir="ltr" className="mb-2 flex items-center gap-2.5 sm:gap-3" aria-label="otp-input">
         {digits.map((digit, i) => (
           <input
             key={i}
@@ -123,7 +114,7 @@ export default function VerifyEmailPage() {
             onChange={(e) => handleChange(i, e.target.value)}
             onKeyDown={(e) => handleKeyDown(i, e)}
             onPaste={handlePaste}
-            aria-label={`رقم التحقق ${i + 1}`}
+            aria-label={`otp-digit-${i + 1}`}
             className={`h-12 w-12 rounded-xl border-2 text-center text-lg font-bold text-[#0f2b3c] transition-all outline-none focus:border-[#48a999] focus:ring-2 focus:ring-[#48a999]/30 sm:h-14 sm:w-14 sm:text-xl ${
               digit ? "border-[#48a999] bg-[#48a999]/5" : "border-slate-200 bg-white"
             }`}
@@ -133,18 +124,18 @@ export default function VerifyEmailPage() {
 
       {/* Resend countdown */}
       <div className="mt-1 mb-5 w-full text-center">
-        {!mounted || secondsLeft > 0 ? (
+        {secondsLeft > 0 ? (
           <span className="text-xs font-medium text-slate-500 sm:text-sm" aria-live="polite">
             اعادة ارسال الرمز بعد{" "}
             <span className="font-bold text-[#48a999]" dir="ltr">
-              {mounted ? formattedTime : "01:00"}
+              {formattedTime}
             </span>
           </span>
         ) : (
           <button
             type="button"
             onClick={handleResend}
-            aria-label="إعادة إرسال رمز التحقق"
+            aria-label="resend-otp"
             className="text-xs font-bold text-[#48a999] underline underline-offset-2 transition-colors hover:text-[#3d9385] sm:text-sm"
           >
             إعادة إرسال الرمز
@@ -167,7 +158,7 @@ export default function VerifyEmailPage() {
       <button
         type="button"
         id="verify-submit-btn"
-        aria-label="تأكيد رمز التحقق"
+        aria-label="otp-submit"
         onClick={handleVerify}
         disabled={verifying}
         className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#48a999] px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-[#48a999]/20 transition-all hover:bg-[#3d9385] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"

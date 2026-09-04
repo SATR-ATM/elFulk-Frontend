@@ -180,7 +180,7 @@ export default function RegisterPage() {
         <Link
           href="/login"
           id="login-link"
-          aria-label="العودة إلى صفحة تسجيل الدخول"
+          aria-label="back-to-login"
           className="font-bold text-slate-800 underline underline-offset-4 transition-colors hover:text-[#48a999]"
         >
           سجل الدخول

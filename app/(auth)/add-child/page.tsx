@@ -15,7 +15,7 @@ interface ChildEntry {
 export default function AddChildPage() {
   const router = useRouter();
   const [children, setChildren] = useState<ChildEntry[]>([
-    { id: Date.now(), name: "", gender: "", birthdate: "", isEditing: true },
+    { id: 1, name: "", gender: "", birthdate: "", isEditing: true },
   ]);
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -102,7 +102,7 @@ export default function AddChildPage() {
                   <button
                     type="button"
                     onClick={() => removeChild(child.id)}
-                    aria-label={`حذف الطفل ${index + 1}`}
+                    aria-label={`delete-child-${index + 1}`}
                     className="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-xl border border-red-200 bg-white text-red-500 transition-colors hover:bg-red-50"
                   >
                     <svg
@@ -159,7 +159,7 @@ export default function AddChildPage() {
                     <button
                       type="button"
                       onClick={() => editChild(child.id)}
-                      aria-label={`تعديل بيانات الطفل ${index + 1}`}
+                      aria-label={`edit-child-${index + 1}`}
                       className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-50 hover:text-slate-600"
                     >
                       <svg
@@ -217,7 +217,7 @@ export default function AddChildPage() {
                   value={child.name}
                   onChange={(e) => updateChild(child.id, "name", e.target.value)}
                   placeholder="اسم طفلك"
-                  aria-label="اسم الطفل"
+                  aria-label="child-name-input"
                   className={`w-full rounded-xl border py-2.5 ps-3.5 pe-10 text-right text-sm font-medium transition-all outline-none placeholder:text-slate-400 focus:border-[#48a999] focus:ring-2 focus:ring-[#48a999]/30 ${
                     errors[`${child.id}-name`]
                       ? "border-red-400 bg-red-50/30"
@@ -273,7 +273,7 @@ export default function AddChildPage() {
                 <select
                   value={child.gender}
                   onChange={(e) => updateChild(child.id, "gender", e.target.value)}
-                  aria-label="جنس الطفل"
+                  aria-label="child-gender-input"
                   className={`w-full appearance-none rounded-xl border py-2.5 ps-9 pe-10 text-right text-sm font-medium transition-all outline-none focus:border-[#48a999] focus:ring-2 focus:ring-[#48a999]/30 ${
                     child.gender ? "text-slate-800" : "text-slate-400"
                   } ${
@@ -338,7 +338,7 @@ export default function AddChildPage() {
                 <select
                   value={child.birthdate}
                   onChange={(e) => updateChild(child.id, "birthdate", e.target.value)}
-                  aria-label="تاريخ ميلاد الطفل"
+                  aria-label="child-birthdate-input"
                   className={`w-full appearance-none rounded-xl border py-2.5 ps-9 pe-10 text-right text-sm font-medium transition-all outline-none focus:border-[#48a999] focus:ring-2 focus:ring-[#48a999]/30 ${
                     child.birthdate ? "text-slate-800" : "text-slate-400"
                   } ${
@@ -379,7 +379,7 @@ export default function AddChildPage() {
         <button
           type="button"
           id="go-to-dashboard-btn"
-          aria-label="الانتقال إلى لوحة التحكم"
+          aria-label="dashboard-link"
           onClick={handleSubmit}
           disabled={submitting}
           className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#48a999] px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-[#48a999]/20 transition-all hover:bg-[#3d9385] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 sm:text-base"
@@ -406,7 +406,7 @@ export default function AddChildPage() {
         <button
           type="button"
           id="add-another-child-btn"
-          aria-label="إضافة طفل آخر"
+          aria-label="add-another-child"
           onClick={addAnotherChild}
           className="flex w-full items-center justify-center gap-2.5 rounded-2xl border border-slate-200 bg-white px-6 py-2.5 text-sm font-semibold text-slate-500 transition-all hover:bg-slate-50 active:scale-[0.99] sm:text-base"
         >

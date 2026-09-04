@@ -68,7 +68,7 @@ export default function LoginPage() {
           id="email"
           type="email"
           placeholder="البريد الإلكتروني"
-          aria-label="البريد الإلكتروني"
+          aria-label="email-input"
           autoComplete="email"
           {...register("email")}
           error={errors.email?.message}
@@ -80,7 +80,7 @@ export default function LoginPage() {
           <PasswordInput
             id="password"
             placeholder="كلمة المرور"
-            aria-label="كلمة المرور"
+            aria-label="password-input"
             autoComplete="current-password"
             {...register("password")}
             error={errors.password?.message}
@@ -91,7 +91,7 @@ export default function LoginPage() {
             <Link
               href="/forgot-password"
               id="forgot-password-link"
-              aria-label="انتقل إلى صفحة استعادة كلمة المرور"
+              aria-label="forgot-password-link"
               className="text-xs font-semibold text-[#48a999] transition-colors hover:text-[#3d9385] hover:underline sm:text-sm"
             >
               نسيت كلمة المرور؟
@@ -114,7 +114,7 @@ export default function LoginPage() {
         <button
           type="submit"
           id="login-submit-btn"
-          aria-label="تسجيل الدخول إلى حسابك"
+          aria-label="login-submit"
           disabled={isSubmitting}
           className="mt-1 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#48a999] px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-[#48a999]/20 transition-all hover:bg-[#3d9385] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
         >
@@ -129,7 +129,7 @@ export default function LoginPage() {
         <Link
           href="/register"
           id="register-link"
-          aria-label="إنشاء حساب جديد"
+          aria-label="register-link"
           className="font-bold text-[#48a999] underline underline-offset-4 transition-colors hover:text-[#3d9385]"
         >
           أنشئ واحدًا الآن

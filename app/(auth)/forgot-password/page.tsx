@@ -57,7 +57,7 @@ export default function ForgotPasswordPage() {
           id="email"
           type="email"
           placeholder="1203456789@gmail.com"
-          aria-label="البريد الإلكتروني"
+          aria-label="email-input"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
@@ -71,7 +71,7 @@ export default function ForgotPasswordPage() {
         <button
           type="submit"
           id="forgot-submit-btn"
-          aria-label="إرسال رمز التحقق"
+          aria-label="send-otp"
           disabled={isSubmitting}
           className="mt-1 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#48a999] px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-[#48a999]/20 transition-all hover:bg-[#3d9385] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
         >
@@ -85,7 +85,7 @@ export default function ForgotPasswordPage() {
         <Link
           href="/register"
           id="register-link"
-          aria-label="إنشاء حساب جديد"
+          aria-label="register-link"
           className="font-bold text-[#48a999] underline underline-offset-4 transition-colors hover:text-[#3d9385]"
         >
           أنشئ واحدًا الآن
@@ -97,7 +97,7 @@ export default function ForgotPasswordPage() {
         <Link
           href="/login"
           id="back-to-login-link"
-          aria-label="العودة إلى صفحة تسجيل الدخول"
+          aria-label="back-to-login"
           className="text-xs font-medium text-slate-500 underline hover:text-slate-800 sm:text-sm"
         >
           العودة لتسجيل الدخول

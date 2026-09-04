@@ -7,8 +7,8 @@ import React from "react";
  * NOT implemented — placeholders only per project notes.
  */
 export function SocialLoginButtons({ context = "login" }: { context?: "login" | "register" }) {
-  const googleLabel = context === "register" ? "إنشاء حساب عبر جوجل" : "تسجيل الدخول عبر جوجل";
-  const appleLabel = context === "register" ? "إنشاء حساب عبر آبل" : "تسجيل الدخول عبر آبل";
+  const googleLabel = context === "register" ? "google-signup" : "google-login";
+  const appleLabel = context === "register" ? "apple-signup" : "apple-login";
 
   return (
     <div className="mt-3 w-full space-y-3">

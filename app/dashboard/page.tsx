@@ -10,7 +10,7 @@ export default function DashboardPage() {
         <h1 className="text-h2 font-bold text-slate-800">لوحة التحكم الرئيسية</h1>
         <Link
           href="/login"
-          aria-label="تسجيل الخروج"
+          aria-label="logout-link"
           className="rounded-xl border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-50"
         >
           تسجيل الخروج

@@ -79,7 +79,7 @@ export function AuthSideHero() {
           <button
             type="button"
             onClick={prevSlide}
-            aria-label="الشريحة السابقة"
+            aria-label="previous-slide-toggle"
             className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/5 text-white backdrop-blur-xs transition-all hover:border-white/50 hover:bg-white/15 focus:ring-2 focus:ring-white/30 focus:outline-none active:scale-95"
           >
             {/* Right arrow in RTL for previous slide */}
@@ -89,7 +89,7 @@ export function AuthSideHero() {
           <button
             type="button"
             onClick={nextSlide}
-            aria-label="الشريحة التالية"
+            aria-label="next-slide-toggle"
             className="flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/5 text-white backdrop-blur-xs transition-all hover:border-white/50 hover:bg-white/15 focus:ring-2 focus:ring-white/30 focus:outline-none active:scale-95"
           >
             {/* Left arrow in RTL for next slide */}
