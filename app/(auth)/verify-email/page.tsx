@@ -3,7 +3,6 @@
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Check } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
 import { useResendTimer } from "@/lib/hooks/useResendTimer";
 import { ElFulkLogo } from "@/components/ui/ElFulkLogo";
 
@@ -68,11 +67,19 @@ export default function VerifyEmailPage() {
     setError(null);
     setVerifying(true);
     try {
-      const res = await authClient.verifyEmail({ code });
-      if (!res.ok) {
-        setError(res.message || "الرمز غير صحيح، يرجى المحاولة مرة أخرى");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/verify-email`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code }),
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        setError(errorData.message || "الرمز غير صحيح، يرجى المحاولة مرة أخرى");
         return;
       }
+
       router.push("/add-child");
     } catch {
       setError("حدث خطأ، يرجى المحاولة مرة أخرى");

@@ -36,10 +36,16 @@ export default function RegisterPage() {
   const onSubmit = async (data: RegisterFormValues) => {
     setRegisterError(null);
     try {
-      const res = await authClient.register(data);
+      const result = await authClient.signUp.email({
+        email: data.email,
+        password: data.password,
+        name: `${data.firstName} ${data.lastName}`,
+      });
 
-      if (!res.ok) {
-        setRegisterError(res.message || "حدث خطأ أثناء إنشاء الحساب، يرجى المحاولة مرة أخرى");
+      if (result.error) {
+        setRegisterError(
+          result.error.message || "حدث خطأ أثناء إنشاء الحساب، يرجى المحاولة مرة أخرى"
+        );
         return;
       }
 

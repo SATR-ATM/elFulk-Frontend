@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Mail, ArrowLeft } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
 import { FormField } from "@/components/ui/FormField";
 import { ElFulkLogo } from "@/components/ui/ElFulkLogo";
 
@@ -23,9 +22,16 @@ export default function ForgotPasswordPage() {
     setIsSubmitting(true);
     setError(null);
     try {
-      const res = await authClient.forgotPassword(email);
-      if (!res.ok) {
-        setError(res.message || "حدث خطأ، يرجى المحاولة مرة أخرى");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/forget-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        setError(errorData.message || "حدث خطأ، يرجى المحاولة مرة أخرى");
         return;
       }
       router.push("/verify-email");

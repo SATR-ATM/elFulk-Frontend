@@ -33,10 +33,13 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormValues) => {
     setAuthError(null);
     try {
-      const res = await authClient.login(data);
+      const result = await authClient.signIn.email({
+        email: data.email,
+        password: data.password,
+      });
 
-      if (!res.ok) {
-        setAuthError(res.message || "يرجى تأكد من صحة المعلومات");
+      if (result.error) {
+        setAuthError(result.error.message || "يرجى تأكد من صحة المعلومات");
         return;
       }
 
