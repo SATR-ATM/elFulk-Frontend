@@ -7,7 +7,7 @@ on:
 
 jobs:
   e2e:
-    timeout-minutes: 20
+    timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -21,7 +21,7 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
       - name: Run E2E tests
         run: pnpm exec playwright test
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
