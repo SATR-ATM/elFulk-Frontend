@@ -9,8 +9,8 @@ import { Mail, ArrowLeft } from "lucide-react";
 
 import { loginSchema, LoginFormValues } from "@/schemas/auth";
 import { authClient } from "@/lib/auth-client";
-import { FormField } from "@/components/ui/FormField";
-import { PasswordInput } from "@/components/ui/PasswordInput";
+import { FormField } from "@/components/FormField";
+import { PasswordInput } from "@/components/PasswordInput";
 import { SocialLoginButtons } from "@/components/auth/SocialLoginButtons";
 
 export function LoginForm() {
@@ -91,7 +91,7 @@ export function LoginForm() {
         {/* General Error Alert if server/credentials failed */}
         {authError && (
           <div
-            role="alert"
+            aria-label="error-alert"
             id="auth-error-alert"
             className="animate-in fade-in rounded-xl bg-red-50 p-2.5 text-center text-xs font-semibold text-red-500 sm:text-sm"
           >

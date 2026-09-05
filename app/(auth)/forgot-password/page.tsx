@@ -1,4 +1,4 @@
-import { ElFulkLogo } from "@/components/ui/ElFulkLogo";
+import { ElFulkLogo } from "@/components/ElFulkLogo";
 import { ForgotPasswordForm } from "@/components/auth/ForgotPasswordForm";
 
 export default function ForgotPasswordPage() {

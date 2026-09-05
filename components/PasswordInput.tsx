@@ -66,7 +66,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, FormFieldProps>(
           <button
             type="button"
             id={inputId ? `${inputId}-toggle-visibility` : "password-toggle-visibility"}
-            aria-label={showPassword ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
+            aria-label="password-toggle"
             onClick={() => setShowPassword((prev) => !prev)}
             className="absolute top-1/2 left-3.5 -translate-y-1/2 rounded-full p-1 text-slate-400 transition-colors hover:text-slate-700 focus:ring-2 focus:ring-[#48a999]/40 focus:outline-none"
           >

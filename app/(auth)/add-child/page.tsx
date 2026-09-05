@@ -1,4 +1,4 @@
-import { ElFulkLogo } from "@/components/ui/ElFulkLogo";
+import { ElFulkLogo } from "@/components/ElFulkLogo";
 import { AddChildForm } from "@/components/auth/AddChildForm";
 
 async function getBirthYears() {

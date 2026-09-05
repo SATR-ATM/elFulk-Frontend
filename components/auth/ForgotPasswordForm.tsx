@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Mail, ArrowLeft } from "lucide-react";
-import { FormField } from "@/components/ui/FormField";
+import { FormField } from "@/components/FormField";
 
 export function ForgotPasswordForm() {
   const router = useRouter();

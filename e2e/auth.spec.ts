@@ -26,7 +26,7 @@ test.describe("Login", () => {
     await page.getByLabel("email-input").fill("wrong@email.com");
     await page.getByLabel("password-input").fill("wrongpassword");
     await page.getByLabel("login-submit").click();
-    await expect(page.getByRole("alert")).toBeVisible();
+    await expect(page.getByLabel("error-alert")).toBeVisible();
     await expect(page).toHaveURL("/login");
   });
 

@@ -9,8 +9,8 @@ import { User, Mail, ArrowLeft } from "lucide-react";
 
 import { registerSchema, RegisterFormValues } from "@/schemas/auth";
 import { authClient } from "@/lib/auth-client";
-import { FormField } from "@/components/ui/FormField";
-import { PasswordInput } from "@/components/ui/PasswordInput";
+import { FormField } from "@/components/FormField";
+import { PasswordInput } from "@/components/PasswordInput";
 import { SocialLoginButtons } from "@/components/auth/SocialLoginButtons";
 
 export function RegisterForm() {

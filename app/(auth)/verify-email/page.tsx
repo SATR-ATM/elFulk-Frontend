@@ -1,4 +1,4 @@
-import { ElFulkLogo } from "@/components/ui/ElFulkLogo";
+import { ElFulkLogo } from "@/components/ElFulkLogo";
 import { VerifyEmailForm } from "@/components/auth/VerifyEmailForm";
 
 export default function VerifyEmailPage() {

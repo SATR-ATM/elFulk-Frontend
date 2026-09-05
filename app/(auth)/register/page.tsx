@@ -1,4 +1,4 @@
-import { ElFulkLogo } from "@/components/ui/ElFulkLogo";
+import { ElFulkLogo } from "@/components/ElFulkLogo";
 import { RegisterForm } from "@/components/auth/RegisterForm";
 
 export default function RegisterPage() {

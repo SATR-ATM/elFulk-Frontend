@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { ElFulkLogo } from "@/components/ui/ElFulkLogo";
+import { ElFulkLogo } from "@/components/ElFulkLogo";
 
 export default function DashboardPage() {
   return (
