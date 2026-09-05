@@ -48,7 +48,7 @@ export function ForgotPasswordForm() {
         <FormField
           id="email"
           type="email"
-          placeholder="1203456789@gmail.com"
+          placeholder="you@gmail.com"
           aria-label="email-input"
           value={email}
           onChange={(e) => {
@@ -63,7 +63,7 @@ export function ForgotPasswordForm() {
         <button
           type="submit"
           id="forgot-submit-btn"
-          aria-label="send-otp"
+          aria-label="forgot-password-submit"
           disabled={isSubmitting}
           className="mt-1 flex w-full items-center justify-center gap-2 rounded-2xl bg-[#48a999] px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-[#48a999]/20 transition-all hover:bg-[#3d9385] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
         >

@@ -104,6 +104,16 @@ export function RegisterForm() {
           error={errors.password?.message}
         />
 
+        {/* Confirm Password */}
+        <PasswordInput
+          id="confirmPassword"
+          placeholder="تأكيد كلمة المرور"
+          aria-label="confirm-password-input"
+          autoComplete="new-password"
+          {...register("confirmPassword")}
+          error={errors.confirmPassword?.message}
+        />
+
         {/* Terms Checkbox */}
         <div className="flex flex-col gap-1 pt-0.5">
           <div className="flex items-center gap-2.5">
@@ -170,7 +180,7 @@ export function RegisterForm() {
         <Link
           href="/login"
           id="login-link"
-          aria-label="back-to-login"
+          aria-label="login-link"
           className="font-bold text-slate-800 underline underline-offset-4 transition-colors hover:text-[#48a999]"
         >
           سجل الدخول

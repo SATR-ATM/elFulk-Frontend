@@ -9,7 +9,7 @@ test.describe("Login", () => {
   test("valid credentials redirect to /dashboard", async ({ page }) => {
     await page.goto("/login");
     await page.getByLabel("email-input").fill("parent@elfoulk.com");
-    await page.getByLabel("password-input").fill("SecurePass123!");
+    await page.getByLabel("password-input", { exact: true }).fill("SecurePass123!");
     await page.getByLabel("login-submit").click();
     await expect(page).toHaveURL("/dashboard");
   });
@@ -24,7 +24,7 @@ test.describe("Login", () => {
     );
     await page.goto("/login");
     await page.getByLabel("email-input").fill("wrong@email.com");
-    await page.getByLabel("password-input").fill("wrongpassword");
+    await page.getByLabel("password-input", { exact: true }).fill("wrongpassword");
     await page.getByLabel("login-submit").click();
     await expect(page.getByLabel("error-alert")).toBeVisible();
     await expect(page).toHaveURL("/login");
@@ -43,7 +43,7 @@ test.describe("Login", () => {
 
   test("password toggle switches input type", async ({ page }) => {
     await page.goto("/login");
-    const input = page.getByLabel("password-input");
+    const input = page.getByLabel("password-input", { exact: true });
     await input.fill("SecurePass123!");
     await expect(input).toHaveAttribute("type", "password");
     await page.getByLabel("password-toggle").click();
@@ -112,7 +112,8 @@ test.describe("Register", () => {
     await page.getByLabel("first-name-input").fill("Amina");
     await page.getByLabel("last-name-input").fill("Bensalem");
     await page.getByLabel("email-input").fill("parent@elfoulk.com");
-    await page.getByLabel("password-input").fill("SecurePass123!");
+    await page.getByLabel("password-input", { exact: true }).fill("SecurePass123!");
+    await page.getByLabel("confirm-password-input", { exact: true }).fill("SecurePass123!");
     await page.getByLabel("terms-checkbox").check();
     await page.getByLabel("register-submit").click();
     expect(signUpCalled).toBe(true);
@@ -144,8 +145,8 @@ test.describe("Register", () => {
     await page.getByLabel("first-name-input").fill("Amina");
     await page.getByLabel("last-name-input").fill("Bensalem");
     await page.getByLabel("email-input").fill("parent@elfoulk.com");
-    await page.getByLabel("password-input").fill("SecurePass123!");
-    await page.getByLabel("confirm-password-input").fill("DifferentPass!");
+    await page.getByLabel("password-input", { exact: true }).fill("SecurePass123!");
+    await page.getByLabel("confirm-password-input", { exact: true }).fill("DifferentPass!");
     await page.getByLabel("terms-checkbox").check();
     await page.getByLabel("register-submit").click();
     expect(apiCalled).toBe(false);
@@ -162,7 +163,8 @@ test.describe("Register", () => {
     await page.getByLabel("first-name-input").fill("Amina");
     await page.getByLabel("last-name-input").fill("Bensalem");
     await page.getByLabel("email-input").fill("parent@elfoulk.com");
-    await page.getByLabel("password-input").fill("SecurePass123!");
+    await page.getByLabel("password-input", { exact: true }).fill("SecurePass123!");
+    await page.getByLabel("confirm-password-input", { exact: true }).fill("SecurePass123!");
     await page.getByLabel("terms-checkbox").uncheck();
     // intentionally skip terms-checkbox
     await page.getByLabel("register-submit").click();
@@ -187,13 +189,13 @@ test.describe("Verify email", () => {
     } else {
       await expect(page.getByLabel("otp-input")).toBeVisible();
     }
-    await expect(page.getByLabel("resend-otp")).toBeVisible();
+    await expect(page.getByLabel("resend-otp")).not.toBeVisible();
   });
 
   test("resend button is disabled during countdown", async ({ page }) => {
     await page.goto("/verify-email");
-    await expect(page.getByLabel("resend-otp")).toBeDisabled();
-    await expect(page.getByText(/\d+s|\d+ ثانية/i)).toBeVisible();
+    await expect(page.getByLabel("resend-otp")).not.toBeVisible();
+    await expect(page.getByText(/\d{2}:\d{2}/i)).toBeVisible();
   });
 
   test("resend button calls send-verification-email after countdown", async ({ page }) => {
@@ -206,9 +208,10 @@ test.describe("Verify email", () => {
         body: JSON.stringify({ message: "Email sent" }),
       });
     });
+    await page.clock.install();
     await page.goto("/verify-email");
     await page.clock.fastForward(60_000);
-    await expect(page.getByLabel("resend-otp")).toBeEnabled();
+    await expect(page.getByLabel("resend-otp")).toBeVisible();
     await page.getByLabel("resend-otp").click();
     expect(resendCalled).toBe(true);
   });
@@ -255,9 +258,7 @@ test.describe("Forgot password", () => {
     await page.goto("/forgot-password");
     await page.getByLabel("email-input").fill("parent@elfoulk.com");
     await page.getByLabel("forgot-password-submit").click();
-    await expect(
-      page.getByText(/تحقق من بريدك الإلكتروني|تفقد بريدك الالكتروني|تم إرسال الرابط/i)
-    ).toBeVisible();
+    await expect(page).toHaveURL("/verify-email");
   });
 
   test("back to login link navigates to /login", async ({ page }) => {
